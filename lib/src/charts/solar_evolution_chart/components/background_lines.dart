@@ -17,7 +17,7 @@ class BackgroundLines extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: containerHeight,
         child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),

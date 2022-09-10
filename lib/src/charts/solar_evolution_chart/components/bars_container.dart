@@ -1,25 +1,34 @@
+import 'package:absolar/src/config/calculos.dart';
 import 'package:flutter/material.dart';
-import 'package:absolar/src/config/app_data.dart' as appData;
-
 import 'bar.dart';
 
 class BarsContainer extends StatelessWidget {
   final int numberOfBars;
   final double barWidth;
   final double containerWidth;
+  final int maxAxisValue;
+  final List solarEvolutionData;
 
-  BarsContainer({
-    Key? key,
-    this.numberOfBars = 11,
-    this.barWidth = 33,
-    required this.containerWidth,
-  }) : super(key: key);
+  BarsContainer(
+      {Key? key,
+      this.numberOfBars = 11,
+      this.barWidth = 33,
+      required this.containerWidth,
+      required this.solarEvolutionData,
+      required this.maxAxisValue})
+      : super(key: key);
 
-  final List solarEvolutionData = appData.solarEvolutionData;
-
-  double _calculateSpace() {
+  double _calculateSpaceBetweenBars() {
     return (containerWidth - (numberOfBars * barWidth)) / (numberOfBars - 1);
   }
+
+  double _conversaoDeValores(double value) {
+    print(value);
+    print((value * 350) / maxAxisValue);
+    return ((value * 350) / maxAxisValue);
+  }
+
+  final Calculos calculo = Calculos();
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +39,15 @@ class BarsContainer extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) {
             return Bar(
-              barHeight: (350 / 100 * 100),
+              maxAxisValue: maxAxisValue,
+              barHeight: _conversaoDeValores(solarEvolutionData[index].total),
               barWidth: barWidth,
+              totalValue: solarEvolutionData[index].total.toString(),
             );
           },
           separatorBuilder: (_, index) {
-            double newWidth = _calculateSpace();
             return SizedBox(
-              width: newWidth,
+              width: _calculateSpaceBetweenBars(),
             );
           },
           itemCount: numberOfBars),
