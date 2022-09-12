@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:absolar/src/config/app_data.dart' as appData;
 
 class SolarEvolutionChart extends StatelessWidget {
-  SolarEvolutionChart({Key? key}) : super(key: key);
+  final double width;
+  final double height;
 
-  final double width = 470;
+  SolarEvolutionChart({
+    Key? key,
+    this.height = 470,
+    this.width = 470,
+  }) : super(key: key);
+
   final List solarEvolutionData = appData.solarEvolutionData;
 
   int _makeDivisiblebyThousand(double value) {
@@ -44,6 +50,7 @@ class SolarEvolutionChart extends StatelessWidget {
                     child: Stack(
                       children: [
                         BackgroundLines(
+                            containerHeight: height,
                             numberOfLines: numberOfLinesGenerate(
                                 solarEvolutionData[10].total)),
                         BarsContainer(
@@ -51,6 +58,7 @@ class SolarEvolutionChart extends StatelessWidget {
                               solarEvolutionData[10].total),
                           solarEvolutionData: solarEvolutionData,
                           containerWidth: width,
+                          containerHeight: height,
                         ),
                       ],
                     ),

@@ -1,7 +1,7 @@
 class Calculos {
-  double getPercentOfValue(double value, double reference) {
+  String getPercentOfValue(double value, double reference) {
     double result = (100 * value) / reference;
-    return double.parse(result.toStringAsFixed(2));
+    return '${result.round()}%';
   }
 
   double getValueOfPercent(double percent, double reference) {

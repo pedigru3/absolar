@@ -4,9 +4,11 @@ class BackgroundLines extends StatelessWidget {
   final int numberOfLines;
   final double containerHeight;
 
-  const BackgroundLines(
-      {Key? key, required this.numberOfLines, this.containerHeight = 350})
-      : super(key: key);
+  const BackgroundLines({
+    Key? key,
+    required this.numberOfLines,
+    required this.containerHeight,
+  }) : super(key: key);
 
   final double _thickness = 1;
 

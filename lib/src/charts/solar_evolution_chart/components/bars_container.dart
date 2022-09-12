@@ -6,6 +6,7 @@ class BarsContainer extends StatelessWidget {
   final int numberOfBars;
   final double barWidth;
   final double containerWidth;
+  final double containerHeight;
   final int maxAxisValue;
   final List solarEvolutionData;
 
@@ -14,6 +15,7 @@ class BarsContainer extends StatelessWidget {
       this.numberOfBars = 11,
       this.barWidth = 33,
       required this.containerWidth,
+      required this.containerHeight,
       required this.solarEvolutionData,
       required this.maxAxisValue})
       : super(key: key);
@@ -23,9 +25,8 @@ class BarsContainer extends StatelessWidget {
   }
 
   double _conversaoDeValores(double value) {
-    print(value);
-    print((value * 350) / maxAxisValue);
-    return ((value * 350) / maxAxisValue);
+    //trabalha com a porpoção do gráfico para caber na tabela
+    return ((value * containerHeight) / maxAxisValue);
   }
 
   final Calculos calculo = Calculos();
@@ -34,15 +35,19 @@ class BarsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: containerWidth,
-      height: 350,
+      height: containerHeight,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) {
             return Bar(
-              maxAxisValue: maxAxisValue,
               barHeight: _conversaoDeValores(solarEvolutionData[index].total),
               barWidth: barWidth,
-              totalValue: solarEvolutionData[index].total.toString(),
+              gdBarHeight: _conversaoDeValores(solarEvolutionData[index].gc),
+              gcBarHeight: _conversaoDeValores(solarEvolutionData[index].gd),
+              totalValue: solarEvolutionData[index].total,
+              containerHeight: containerHeight,
+              gd: solarEvolutionData[index].gd,
+              gc: solarEvolutionData[index].gc,
             );
           },
           separatorBuilder: (_, index) {
