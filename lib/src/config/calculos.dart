@@ -8,4 +8,12 @@ class Calculos {
     double result = (reference * percent) / 100;
     return double.parse(result.toStringAsFixed(2));
   }
+
+  double calculateSpaceBetween(
+    double heightOrwidth,
+    int numberOfLines,
+    double thickness,
+  ) {
+    return (heightOrwidth - (numberOfLines * thickness)) / (numberOfLines - 1);
+  }
 }

@@ -20,10 +20,6 @@ class BarsContainer extends StatelessWidget {
       required this.maxAxisValue})
       : super(key: key);
 
-  double _calculateSpaceBetweenBars() {
-    return (containerWidth - (numberOfBars * barWidth)) / (numberOfBars - 1);
-  }
-
   double _conversaoDeValores(double value) {
     //trabalha com a porpoção do gráfico para caber na tabela
     return ((value * containerHeight) / maxAxisValue);
@@ -31,9 +27,12 @@ class BarsContainer extends StatelessWidget {
 
   final Calculos calculo = Calculos();
 
+  double _calculateSpaceBetweenBars() =>
+      calculo.calculateSpaceBetween(containerWidth, numberOfBars, barWidth);
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: containerWidth,
       height: containerHeight,
       child: ListView.separated(

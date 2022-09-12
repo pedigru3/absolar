@@ -1,8 +1,10 @@
 import 'package:absolar/src/charts/components/box_title.dart';
 import 'package:absolar/src/charts/solar_evolution_chart/components/background_lines.dart';
 import 'package:absolar/src/charts/solar_evolution_chart/components/bars_container.dart';
+import 'package:absolar/src/config/calculos.dart';
 import 'package:flutter/material.dart';
 import 'package:absolar/src/config/app_data.dart' as appData;
+import 'package:google_fonts/google_fonts.dart';
 
 class SolarEvolutionChart extends StatelessWidget {
   final double width;
@@ -13,6 +15,8 @@ class SolarEvolutionChart extends StatelessWidget {
     this.height = 470,
     this.width = 470,
   }) : super(key: key);
+
+  final Calculos calculo = Calculos();
 
   final List solarEvolutionData = appData.solarEvolutionData;
 
@@ -28,31 +32,31 @@ class SolarEvolutionChart extends StatelessWidget {
     return _makeDivisiblebyThousand(maxHeightValue) / 1000;
   }
 
+  int lines() => numberOfLinesGenerate(solarEvolutionData[10].total) + 1;
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: width,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const BoxTitle(
-                    title:
-                        'Evolution of the Solar Photovoltaic Energy in Brazil',
-                    source: 'ANEEL/ABSOLAR, 2022',
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
+    return SizedBox(
+      width: 510,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const BoxTitle(
+            title: 'Evolution of the Solar Photovoltaic Energy in Brazil',
+            source: 'ANEEL/ABSOLAR, 2022',
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
                     child: Stack(
                       children: [
                         BackgroundLines(
-                            containerHeight: height,
-                            numberOfLines: numberOfLinesGenerate(
-                                solarEvolutionData[10].total)),
+                            containerHeight: height, numberOfLines: lines()),
                         BarsContainer(
                           maxAxisValue: _makeDivisiblebyThousand(
                               solarEvolutionData[10].total),
@@ -62,11 +66,13 @@ class SolarEvolutionChart extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          )),
+          )
+        ],
+      ),
     );
   }
 }

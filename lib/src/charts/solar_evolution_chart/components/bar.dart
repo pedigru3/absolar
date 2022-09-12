@@ -60,6 +60,14 @@ class Bar extends StatelessWidget {
   }
 
   Color modifierColor() {
+    if (gdBarHeight > 15 && gdBarHeight < 50) {
+      return Colors.black;
+    } else {
+      return Colors.white;
+    }
+  }
+
+  Color modifierPercentageColor() {
     if (gdBarHeight > 20 && gdBarHeight < 30) {
       return Colors.black;
     } else {
@@ -117,7 +125,7 @@ class Bar extends StatelessWidget {
                   calculo.getPercentOfValue(gd, totalValue),
                   style: GoogleFonts.lato(
                     fontSize: 10,
-                    color: modifierColor(),
+                    color: modifierPercentageColor(),
                   ),
                 ),
               ],
